@@ -10,8 +10,8 @@ interface R2Config {
   bucket: string
 }
 
-const validateAuthKey = (authKey: string): boolean => {
-  return authKey && authKey.length > 0
+const validateAuthKey = (authKey: string | undefined | null): boolean => {
+  return !!authKey
 }
 
 app.post('/upload', async (c) => {
@@ -49,23 +49,24 @@ app.post('/upload', async (c) => {
     })
     console.log('S3 client created successfully')
 
-    const uploadedFiles = []
+    const uploadedFiles: Array<{ filename: string; size: number; type: string }> = []
     
     for (const [key, value] of formData.entries()) {
       console.log(`Processing form field: ${key}`)
-      if (value instanceof File) {
-        console.log(`Uploading file: ${value.name} (${value.size} bytes)`)
-        const fileBuffer = await value.arrayBuffer()
+      if (typeof value !== 'string') {
+        const file = value as File
+        console.log(`Uploading file: ${file.name} (${file.size} bytes)`)
+        const fileBuffer = await file.arrayBuffer()
         console.log('File buffer created, uploading to S3...')
-        
-        const s3File = s3Client.file(value.name)
+
+        const s3File = s3Client.file(file.name)
         await Bun.write(s3File, new Uint8Array(fileBuffer))
-        console.log(`File ${value.name} uploaded successfully`)
-        
+        console.log(`File ${file.name} uploaded successfully`)
+
         uploadedFiles.push({
-          filename: value.name,
-          size: value.size,
-          type: value.type
+          filename: file.name,
+          size: file.size,
+          type: file.type
         })
       }
     }
@@ -79,14 +80,18 @@ app.post('/upload', async (c) => {
       files: uploadedFiles
     })
 
-  } catch (error) {
-    console.error('Upload error details:', error)
-    console.error('Error stack:', error.stack)
-    return c.json({ 
-      error: 'Upload failed', 
-      details: error.message,
-      type: error.constructor.name 
-    }, 500)
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error('Upload error details:', error)
+      console.error('Error stack:', error.stack)
+      return c.json({ 
+        error: 'Upload failed', 
+        details: error.message,
+        type: error.constructor.name 
+      }, 500)
+    }
+    console.error('Unknown error:', error)
+    return c.json({ error: 'Upload failed', details: String(error) }, 500)
   }
 })
 
@@ -106,7 +111,7 @@ export default {
   // Allow large uploads (e.g., up to 1 GB) instead of Bun's default 16 MB limit
   maxRequestBodySize: 1024 * 1024 * 1024, // 1 GB
   fetch: app.fetch,
-  error(error) {
+  error(error: unknown) {
     console.error('Server error:', error)
     return new Response('Internal Server Error', { status: 500 })
   }
