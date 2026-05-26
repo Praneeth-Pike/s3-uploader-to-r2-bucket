@@ -1,0 +1,22 @@
+{
+  "name": "s3-r2-uploader-desktop",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun run dev-server.ts",
+    "build": "bun build ./index.html --outdir ./dist",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-dialog": "^2"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/bun": "latest"
+  }
+}

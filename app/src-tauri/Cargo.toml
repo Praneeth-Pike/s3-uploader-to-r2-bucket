@@ -1,0 +1,28 @@
+[package]
+name = "s3-r2-uploader"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "s3_r2_uploader_lib"
+crate-type = ["lib", "cdylib", "staticlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-dialog = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["full"] }
+aws-sdk-s3 = "1"
+aws-credential-types = { version = "1", features = ["hardcoded-credentials"] }
+uuid = { version = "1", features = ["v4"] }
+
+[profile.dev]
+opt-level = 0
+
+[profile.release]
+strip = true
+lto = true
