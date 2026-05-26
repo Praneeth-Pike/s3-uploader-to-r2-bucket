@@ -1,0 +1,8 @@
+# Environment secrets — excluded from Cursor indexing and Agent/Composer context
+# https://cursor.com/docs/reference/ignore-file
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+

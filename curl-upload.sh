@@ -1,9 +1,20 @@
-curl --request POST \
-  --url http://localhost:3000/upload \
+curl -X POST 'http://localhost:3000/upload' \
+  --header 'User-Agent: cli' \
+  --header 'Accept: */*' \
   --header 'Authorization: test' \
-  --header 'Expect:' \
-  --form accessKeyId=00b66ba6d4b4a863ab91a2b9a46e6128 \
-  --form secretAccessKey=fb07b3d813668852a0e5a35f9602b07eb5d90cbbf74dad20c4fd1bfd887e6d1f \
-  --form endpoint=https://e8f92de6cd6146ff2ea89925c7cb5575.r2.cloudflarestorage.com \
-  --form bucket=rabbitholes-apps \
-  --form file=@/Users/praneethpike/Work/Rabbitholes/artifacts/v5.0.0-beta.6/rabbitholes-app-5.0.0-beta.6-x64.dmg
+  --header 'Content-Type: multipart/form-data' \
+  --header 'Expect: ' \
+  --form 'accessKeyId=${ACCESS_KEY_ID}' \
+  --form 'secretAccessKey=${SECRET_ACCESS_KEY}' \
+  --form 'endpoint=${ENDPOINT}' \
+  --form 'bucket=${BUCKET}' \
+  --form file=@/Users/praneethpike/Work/fluidchat/artifacts/v7.0.1/rabbitholes-app-7.0.1-arm64.dmg \
+  --form file=@/Users/praneethpike/Work/fluidchat/artifacts/v7.0.1/rabbitholes-app-7.0.1-setup.exe \
+  --form file=@/Users/praneethpike/Work/fluidchat/artifacts/v7.0.1/rabbitholes-app-7.0.1-setup.exe.blockmap \
+  --form file=@/Users/praneethpike/Work/fluidchat/artifacts/v7.0.1/rabbitholes-app-7.0.1-x64.dmg \
+  --form file=@/Users/praneethpike/Work/fluidchat/artifacts/v7.0.1/rabbitholes-app-7.0.1.AppImage \
+  --form file=@/Users/praneethpike/Work/fluidchat/artifacts/v7.0.1/RabbitHolesAI-7.0.1-amd64.deb \
+  --form file=@/Users/praneethpike/Work/fluidchat/artifacts/v7.0.1/RabbitHolesAI-7.0.1-arm64-mac.zip \
+  --form file=@/Users/praneethpike/Work/fluidchat/artifacts/v7.0.1/RabbitHolesAI-7.0.1-arm64-mac.zip.blockmap \
+  --form file=@/Users/praneethpike/Work/fluidchat/artifacts/v7.0.1/RabbitHolesAI-7.0.1-mac.zip \
+  --form file=@/Users/praneethpike/Work/fluidchat/artifacts/v7.0.1/RabbitHolesAI-7.0.1-mac.zip.blockmap

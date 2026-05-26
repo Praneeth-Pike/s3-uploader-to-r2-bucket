@@ -109,7 +109,7 @@ app.get('/', (c) => {
 export default {
   port: 3000,
   // Allow large uploads (e.g., up to 1 GB) instead of Bun's default 16 MB limit
-  maxRequestBodySize: 1024 * 1024 * 1024, // 1 GB
+  maxRequestBodySize: 1024 * 1024 * 1024 * 5, // 5 GB
   fetch: app.fetch,
   error(error: unknown) {
     console.error('Server error:', error)
