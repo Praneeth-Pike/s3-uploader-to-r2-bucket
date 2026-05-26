@@ -71,20 +71,9 @@ jobs:
           args: ${{ matrix.args }}
 
       - name: Upload build artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: s3-r2-uploader-${{ matrix.label }}
-          path: |
-            app/src-tauri/target/release/bundle/**/*.deb
-            app/src-tauri/target/release/bundle/**/*.AppImage
-            app/src-tauri/target/release/bundle/**/*.dmg
-            app/src-tauri/target/release/bundle/**/*.exe
-            app/src-tauri/target/release/bundle/**/*.msi
-            app/src-tauri/target/release/bundle/**/*.nsis
-            app/src-tauri/target/*/release/bundle/**/*.deb
-            app/src-tauri/target/*/release/bundle/**/*.AppImage
-            app/src-tauri/target/*/release/bundle/**/*.dmg
-            app/src-tauri/target/*/release/bundle/**/*.exe
-            app/src-tauri/target/*/release/bundle/**/*.msi
-            app/src-tauri/target/*/release/bundle/**/*.nsis
+          path: app/src-tauri/target/**/release/bundle/**
           if-no-files-found: warn

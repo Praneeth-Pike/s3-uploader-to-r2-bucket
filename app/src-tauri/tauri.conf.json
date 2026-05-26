@@ -1,7 +1,7 @@
 {
-  "productName": "S3 R2 Uploader",
+  "productName": "s3-r2-uploader",
   "version": "0.1.0",
-  "identifier": "com.s3r2uploader.app",
+  "identifier": "com.s3r2uploader.desktop",
   "build": {
     "beforeDevCommand": "bun run dev",
     "devUrl": "http://localhost:1420",
